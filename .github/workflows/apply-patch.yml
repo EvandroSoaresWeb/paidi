@@ -1,3 +1,33 @@
-Texto a substituir: 5511999999999
-Novo texto: 5516992882848
-Arquivo: index.html
+name: Apply Patch
+
+on:
+  workflow_dispatch:
+    inputs:
+      old_text:
+        description: 'Texto a substituir'
+        required: true
+      new_text:
+        description: 'Novo texto'
+        required: true
+      file:
+        description: 'Arquivo a editar'
+        required: true
+        default: 'index.html'
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Apply replacement
+        run: |
+          sed -i "s|${{ github.event.inputs.old_text }}|${{ github.event.inputs.new_text }}|g" ${{ github.event.inputs.file }}
+
+      - name: Commit changes
+        run: |
+          git config user.email "bot@paidi.com"
+          git config user.name "Paidi Bot"
+          git add -A
+          git commit -m "Atualização via Claude"
+          git push
