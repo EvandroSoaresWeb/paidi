@@ -1,27 +1,3 @@
-name: Apply Patch
-
-on:
-  workflow_dispatch:
-    inputs:
-      patch:
-        description: 'Patch em base64'
-        required: true
-
-jobs:
-  apply:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Apply patch
-        run: |
-          echo "${{ github.event.inputs.patch }}" | base64 -d > changes.patch
-          git apply changes.patch
-
-      - name: Commit changes
-        run: |
-          git config user.email "bot@paidi.com"
-          git config user.name "Paidi Bot"
-          git add -A
-          git commit -m "Atualização via Claude"
-          git push
+Texto a substituir: 5511999999999
+Novo texto: 5516992882848
+Arquivo: index.html
